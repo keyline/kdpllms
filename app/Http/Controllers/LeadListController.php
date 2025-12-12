@@ -217,7 +217,7 @@ class LeadListController extends Controller
             $searchVal = strip_tags($request->input('search'));
             $data['searchVal'] = $searchVal;
             
-            $searchableHeaderIds = [2, 4]; // which master_leads.header_id(s) we want to search on
+            $searchableHeaderIds = [1, 2, 4]; // which master_leads.header_id(s) we want to search on
 
             $query->whereIn('lead_sl_no', function ($subQuery) use ($searchVal, $searchableHeaderIds) {
                 $subQuery->select('sl_no')
@@ -325,7 +325,7 @@ class LeadListController extends Controller
             }
             else
             {
-                $branchlead['lead_activity_count'] = 'New' ;
+                $branchlead['lead_activity_count'] = '0 Update' ;
             }
 
             //Lead Status
@@ -1191,7 +1191,7 @@ class LeadListController extends Controller
 
             if($request->leadStatus)
             {
-               if(!Str::contains(strtolower($request->leadStatus), '[dump]') && !Str::contains(strtolower($request->leadStatus), '[success]'))
+               if(!Str::contains(strtolower($request->leadStatus), '[dump]') && !Str::contains(strtolower($request->leadStatus), '[converted]'))
                {
                     $rules["nextFollowUpDate"] = 'required';
                     $rules["nextFollowUpTime"] = 'required';

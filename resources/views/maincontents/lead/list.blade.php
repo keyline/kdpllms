@@ -513,8 +513,8 @@ $controllerRoute = $module['controller_route'];
                                                 @endif
                                                 type="text"
                                                 class="searchBar form-control"
-                                                placeholder="Search by name or phone"
-                                                aria-label="Search by name or phone"
+                                                placeholder="Search by Company Name or Contact Person Name or Phone"
+                                                aria-label="Search by Company Name or Contact Person Name or Phone"
                                                 aria-describedby="basic-addon-search31" />
 
                                             @if(!empty($searchVal))
@@ -626,6 +626,12 @@ $controllerRoute = $module['controller_route'];
                                             <td class="searchHighlightSection">
                                                @foreach($eachLeadArr->eachLeadDetailsArr as $key => $value)
                                                {{-- @dd($key, $value); --}}
+                                                    @if( ($value["is_visible_in_lead_list"] == "YES") && !empty($value["company-name"]) )
+                                                        <span class="badge badge-center rounded-pill bg-label-info mb-1">
+                                                            <i class="fas fa-building"></i>
+                                                        </span> <span class="fw-bold text-primary">{{ $value["company-name"] }}</span>
+                                                        <br>
+                                                    @endif
                                                     @if( ($value["is_visible_in_lead_list"] == "YES") && !empty($value["contact-person-name"]) )
                                                         <span class="badge badge-center rounded-pill bg-label-info mb-1">
                                                             <i class="fa-solid fa-user"></i>
@@ -999,7 +1005,7 @@ $controllerRoute = $module['controller_route'];
                 $dateLabel.find("span.text-danger").remove();
                 $timeLabel.find("span.text-danger").remove();
             }
-            else if (statusVal.toLowerCase().includes("[success]"))  // handling success
+            else if (statusVal.toLowerCase().includes("[converted]"))  // handling converted
             {
                 // Disable inputs
                 $followUpDate.prop("disabled", true).removeAttr("required").val("");
